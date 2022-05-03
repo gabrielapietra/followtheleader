@@ -17,11 +17,25 @@ $ git clone https://github.com/ROBOTIS-GIT/turtlebot3_simulations.git
 rosrun follow_me tb3_follow_node
 ```
 
+<h3>Definindo o robô que será utilizado</h3>
+
+```
+export TURTLEBOT3_MODEL=burger
+```
+
+<h3>Buildando e setando variáveis</h3>
+
+```
+source devel/setup.bash
+catkin build
+```
+
 <h3>Rodando o mapa com dois robôs</h3>
 
 ```
 roslaunch turtlebot3_gazebo two_tb3.launch
 ```
+
 Nesse arquivo é possível ajustar a posição de onde os robôs iniciarão.
 
 <h3>Seguindo o mestre</h3>
