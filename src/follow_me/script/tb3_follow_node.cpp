@@ -3,8 +3,8 @@
 #include <geometry_msgs/Pose2D.h>
 #include <geometry_msgs/Twist.h>
 #include <tf/tf.h>
-double follower_x, follower_y, follower_t;
-double master_x, master_y, master_t;
+double follower_t;
+double master_t;
 
 class Follow{
 	private:
@@ -43,9 +43,6 @@ class Follow{
 			pose2d.theta = yaw;
             master_t = pose2d.theta;
 
-            master_x = pose2d.x;
-            master_y = pose2d.y;
-
 			ROS_INFO("[Master] x: %.2lf, y: %.2lf, theta: %.2lf", pose2d.x, pose2d.y, pose2d.theta);
 		}
 
@@ -66,9 +63,6 @@ class Follow{
 			pose2d.theta = yaw;
             follower_t = pose2d.theta;
 
-            follower_x = pose2d.x;
-            follower_y = pose2d.y;
-
 			ROS_INFO("[Follower] x: %.2lf, y: %.2lf, theta: %.2lf", pose2d.x, pose2d.y, pose2d.theta);
 		}
 
@@ -79,7 +73,7 @@ class Follow{
 
             double vk_p, v_t, k_pa, k_pl;
             double maxLinearVel, maxAngVel;
-            double omega = 0, theta_r, error, ang;
+            double omega_t = 0, theta_r, error, ang;
 
             k_pl = 0.3; 
             k_pa = 6;
@@ -89,8 +83,8 @@ class Follow{
             maxAngVel     = 2.84;
 
             error = sqrt (
-                            pow(master_x - follower_x, 2) +   
-                            pow(master_y - follower_y, 2) 
+                            pow(masterPose.x - followerPose_.x, 2) +   
+                            pow(masterPose.y - followerPose_.y, 2) 
                          );
             v_t = k_pl * error;  
 
@@ -99,33 +93,28 @@ class Follow{
                 v_t = maxLinearVel;
 
             //n bater quando ficar próximo de 25 cm
-            if(error < 0.25)
-                command.linear.x = 0.0;               
-            else 
-                command.linear.x = v_t;
+            if(error < 0.25) 
+                command.linear.x = 0.0; 
+          
+            else command.linear.x = v_t;
 
             //angular
-            if((master_x - follower_x) != 0)
-                ang = (master_y - follower_y) / (master_x - follower_x);
-            else        
-                ang = 0;
+            theta_r = atan2((masterPose.y - followerPose_.y), (masterPose.x - followerPose_.x));
+            omega_t = k_pa * (theta_r - follower_t);
 
-            theta_r = atan(ang);
-            omega = k_pa * (theta_r - follower_t);
-
-            if(abs(omega) > maxAngVel)
+            if(abs(omega_t) > maxAngVel)
             {
-                if (omega < 0)
-                    omega = -maxAngVel;
+                if (omega_t < 0)
+                    omega_t = -maxAngVel;
                 else 
-                    omega = maxAngVel;
+                    omega_t = maxAngVel;
             }
 
-            command.angular.z = omega;     
+            command.angular.z = omega_t;
 
             FollowerControl_.publish(command);
 
-            ROS_INFO("[Follower] Linear Control %.2f, Angular Control %.2f", v_t, omega);
+            ROS_INFO("[Follower] Linear Control %.2f, Angular Control %.2f", v_t, omega_t);
         }
 };
 
