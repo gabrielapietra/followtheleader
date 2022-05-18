@@ -14,7 +14,7 @@ $ git clone https://github.com/ROBOTIS-GIT/turtlebot3_simulations.git
 <h3>Inicializando o master</h3>
 
 ```
-rosrun follow_me tb3_follow_node
+roscore
 ```
 
 <h3>Definindo o robô que será utilizado</h3>
