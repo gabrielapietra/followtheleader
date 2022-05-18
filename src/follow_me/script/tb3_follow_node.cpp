@@ -83,8 +83,8 @@ class Follow{
             maxAngVel     = 2.84;
 
             error = sqrt (
-                            pow(masterPose.x - followerPose_.x, 2) +   
-                            pow(masterPose.y - followerPose_.y, 2) 
+                            pow(masterPose_.x - followerPose_.x, 2) +   
+                            pow(masterPose_.y - followerPose_.y, 2) 
                          );
             v_t = k_pl * error;  
 
@@ -99,7 +99,7 @@ class Follow{
             else command.linear.x = v_t;
 
             //angular
-            theta_r = atan2((masterPose.y - followerPose_.y), (masterPose.x - followerPose_.x));
+            theta_r = atan2((masterPose_.y - followerPose_.y), (masterPose_.x - followerPose_.x));
             omega_t = k_pa * (theta_r - follower_t);
 
             if(abs(omega_t) > maxAngVel)
