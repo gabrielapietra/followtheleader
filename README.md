@@ -59,3 +59,8 @@ Pelo <i>teleop</i> é possível controlar o mestre pelo teclado.
 rosrun turtlebot3_teleop turtlebot3_teleop_key
 ```
 
+<h3>Criando pacote</h3>
+
+```
+catkin_create_pkg follow_me std_msgs nav_msgs geometry_msgs tf
+```
