@@ -11,6 +11,14 @@ $ git clone https://github.com/ROBOTIS-GIT/turtlebot3.git
 $ git clone https://github.com/ROBOTIS-GIT/turtlebot3_simulations.git
 ```
 
+<h3>Compilando</h3>
+
+Esse comando foi feito na pasta principal, anterior à src.
+```
+catkin build
+```
+
+
 <h3>Inicializando o master</h3>
 
 ```
