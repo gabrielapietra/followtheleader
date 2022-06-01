@@ -4,7 +4,7 @@ O projeto consiste no desafio de "Seguir o mestre", onde um dos robô é conside
 
 <h3>Configurações iniciais </h3>
 
-Foi utilizado o turtlebot3, de modo que foi usado os seguintes recursos dele, inseridos na pasta src:
+<br><br>Foi utilizado o turtlebot3, de modo que foi usado os seguintes recursos dele, inseridos na pasta src:
 ```
 $ git clone https://github.com/ROBOTIS-GIT/turtlebot3_msgs.git
 $ git clone https://github.com/ROBOTIS-GIT/turtlebot3.git
